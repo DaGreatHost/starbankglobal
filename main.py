@@ -74,7 +74,7 @@ async def show_main_menu(client, message_or_query, lang):
         await message_or_query.edit_text(text, reply_markup=InlineKeyboardMarkup(buttons), parse_mode="markdown")
 
    
-        await message_or_query.edit_text(text, reply_markup=InlineKeyboardMarkup(buttons), parse_mode="markdown")
+        
 
 @app.on_callback_query(filters.regex("buy_"))
 async def buy_package(client, query):
