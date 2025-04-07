@@ -33,7 +33,8 @@ LANG = {
     "tl": {
         "welcome": "Maligayang pagdating sa *StarBank Global*! 🌟",
         "choose_pack": "Pumili ng star package sa ibaba:",
-        "ref_panel": "👥 *Mga Imbitado:* {count}
+        "ref_panel": "👥 *Mga Imbitado:* {count}\\n🏆 *Antas:* {rank}\\n🔗 Referral Link:\\n{link}",
+
 🏆 *Antas:* {rank}
 🔗 Referral Link:
 {link}",
