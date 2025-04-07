@@ -1,4 +1,3 @@
-
 # StarBank Global Official Bot v2 – Full Production Bot
 # Developed with ❤️ by Telegram Bot Builder Pro
 
@@ -6,7 +5,7 @@ import json
 import qrcode
 import io
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 API_ID = 22646749
 API_HASH = "96f7ef944faa58a4a7b228015a847d18"
@@ -25,19 +24,12 @@ LANG = {
         "welcome": "Welcome to *StarBank Global*! 🌟",
         "choose_pack": "Please select a package below:",
         "ref_panel": "👥 *Referrals:* {count}\\n🏆 *Rank:* {rank}\\n🔗 Referral Link:\\n{link}",
-
-"ref_panel": "👥 *Referrals:* {count}\\n🏆 *Rank:* {rank}\\n🔗 Referral Link:\\n{link}",
-
         "lang_select": "🌐 Please choose your language:"
     },
     "tl": {
         "welcome": "Maligayang pagdating sa *StarBank Global*! 🌟",
         "choose_pack": "Pumili ng star package sa ibaba:",
         "ref_panel": "👥 *Mga Imbitado:* {count}\\n🏆 *Antas:* {rank}\\n🔗 Referral Link:\\n{link}",
-
-🏆 *Antas:* {rank}
-🔗 Referral Link:
-{link}",
         "lang_select": "🌐 Pumili ng wika:"
     }
 }
@@ -78,9 +70,7 @@ async def set_lang(client, query):
 
 async def show_main_menu(client, message, lang):
     buttons = [[InlineKeyboardButton(f"{name} - {data['price']}", callback_data=f"buy_{name}")] for name, data in star_packages.items()]
-    await message.reply(LANG[lang]["welcome"] + "
-
-" + LANG[lang]["choose_pack"],
+    await message.reply(LANG[lang]["welcome"] + "\n\n" + LANG[lang]["choose_pack"],
                         reply_markup=InlineKeyboardMarkup(buttons), parse_mode="markdown")
 
 @app.on_callback_query(filters.regex("buy_"))
@@ -92,8 +82,7 @@ async def buy_package(client, query):
     bio.name = "qr.png"
     qr.save(bio, "PNG")
     bio.seek(0)
-    await client.send_photo(query.from_user.id, photo=bio, caption=f"🔗 *{pack}*
-{link}", parse_mode="markdown")
+    await client.send_photo(query.from_user.id, photo=bio, caption=f"🔗 *{pack}*\n{link}", parse_mode="markdown")
     await query.answer()
 
 @app.on_message(filters.command("affiliate"))
@@ -112,8 +101,7 @@ async def claim_reward(client, message):
     count = len(user_referrals.get(uid, set()))
     reward = (count // 100) * 100
     if reward > 0:
-        await client.send_message(ADMIN_ID, f"🎁 User {uid} is claiming {reward} stars.
-Please verify and deliver.")
+        await client.send_message(ADMIN_ID, f"🎁 User {uid} is claiming {reward} stars.\nPlease verify and deliver.")
         await message.reply("✅ Your claim has been sent to admin.")
     else:
         await message.reply("❌ You don’t have enough invites yet. (100 required)")
@@ -134,8 +122,7 @@ async def broadcast(client, message):
 
 @app.on_message(filters.command("balance") & filters.user(ADMIN_ID))
 async def show_balance(client, message):
-    await message.reply(f"💰 Your TON wallet:
-`{TON_WALLET}`", parse_mode="markdown")
+    await message.reply(f"💰 Your TON wallet:\n`{TON_WALLET}`", parse_mode="markdown")
 
 @app.on_message(filters.command("promo"))
 async def promo_code(client, message):
@@ -145,8 +132,7 @@ async def promo_code(client, message):
     code = args[1].strip().upper()
     reward = promo_codes.get(code)
     if reward:
-        await message.reply(f"🎉 Promo valid! You've earned {reward} stars.
-(Feature not yet auto-delivered.)")
+        await message.reply(f"🎉 Promo valid! You've earned {reward} stars.\n(Feature not yet auto-delivered.)")
     else:
         await message.reply("❌ Invalid promo code.")
 
