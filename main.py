@@ -47,26 +47,20 @@ def get_rank(count):
     else:
         return "👶 Starter"
 
+
 @app.on_message(filters.command("start"))
 async def start(client, message):
     user_id = message.from_user.id
     args = message.text.split()
-    if user_id not in user_lang:
-        user_lang[user_id] = "en"
+    user_lang[user_id] = "en"
     if len(args) > 1 and args[1].isdigit():
         ref = int(args[1])
         if ref != user_id:
             user_referrals.setdefault(ref, set()).add(user_id)
-    buttons = [[InlineKeyboardButton("🇬🇧 English", callback_data="lang_en"),
-                InlineKeyboardButton("🇵🇭 Tagalog", callback_data="lang_tl")]]
-    await message.reply(LANG["en"]["lang_select"], reply_markup=InlineKeyboardMarkup(buttons))
+    await show_main_menu(client, message, "en")
+    )
 
-@app.on_callback_query(filters.regex("lang_"))
-async def set_lang(client, query):
-    lang = query.data.split("_")[1]
-    user_lang[query.from_user.id] = lang
-    await show_main_menu(client, query.message, lang)
-    await query.answer("Language set.")
+# Language selector removed
 
 async def show_main_menu(client, message_or_query, lang):
     buttons = [[InlineKeyboardButton(f"{name} - {data['price']}", callback_data=f"buy_{name}")]
