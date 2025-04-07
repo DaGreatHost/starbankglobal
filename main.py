@@ -66,7 +66,8 @@ async def show_main_menu(client, message_or_query, lang):
             for name, data in star_packages.items()]
     text = LANG[lang]["welcome"] + "\n\n" + LANG[lang]["choose_pack"]
 
-" + LANG[lang]["choose_pack"]
+text = LANG[lang]["welcome"] + "\\n\\n" + LANG[lang]["choose_pack"]
+
 
     if isinstance(message_or_query, Message):
         await message_or_query.reply(text, reply_markup=InlineKeyboardMarkup(buttons), parse_mode="markdown")
