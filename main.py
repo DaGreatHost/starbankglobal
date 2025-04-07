@@ -129,17 +129,20 @@ async def broadcast(client, message):
 async def show_balance(client, message):
     await message.reply(f"💰 Your TON wallet:\n`{TON_WALLET}`", parse_mode="markdown")
 
+
 @app.on_message(filters.command("promo"))
 async def promo_code(client, message):
     args = message.text.split()
     if len(args) < 2:
-        return await message.reply("Use: /promo CODE")
+        await message.reply("Use: /promo CODE")
+        return
     code = args[1].strip().upper()
     reward = promo_codes.get(code)
     if reward:
         await client.send_message(ADMIN_ID, f"🎁 User {message.from_user.id} used promo code {code} and should receive {reward} stars.")
-    await message.reply(f"🎉 Promo valid! You've earned {reward} stars. Admin will verify soon.")
+        await message.reply(f"🎉 Promo valid! You've earned {reward} stars. Admin will verify soon.")
     else:
         await message.reply("❌ Invalid promo code.")
+
 
 app.run()
