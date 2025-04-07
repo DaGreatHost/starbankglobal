@@ -63,7 +63,7 @@ async def start(client, message):
 
 async def show_main_menu(client, message_or_query, lang):
     buttons = [[InlineKeyboardButton(f"{name} - {data['price']}", callback_data=f"buy_{name}")]
-               for name, data in star_packages.items()]
+            for name, data in star_packages.items()]
     text = LANG[lang]["welcome"] + "\n\n" + LANG[lang]["choose_pack"]
 
 " + LANG[lang]["choose_pack"]
@@ -72,7 +72,7 @@ async def show_main_menu(client, message_or_query, lang):
         await message_or_query.reply(text, reply_markup=InlineKeyboardMarkup(buttons), parse_mode="markdown")
     else:
         await message_or_query.edit_text(text, reply_markup=InlineKeyboardMarkup(buttons), parse_mode="markdown")
-    
+
     else:
         await message_or_query.edit_text(text, reply_markup=InlineKeyboardMarkup(buttons), parse_mode="markdown")
 
