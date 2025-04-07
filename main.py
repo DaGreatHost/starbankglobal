@@ -24,7 +24,8 @@ LANG = {
     "en": {
         "welcome": "Welcome to *StarBank Global*! 🌟",
         "choose_pack": "Please select a package below:",
-        "ref_panel": "👥 *Referrals:* {count}
+        "ref_panel": "👥 *Referrals:* {count}\\n🏆 *Rank:* {rank}\\n🔗 Referral Link:\\n{link}",
+
 🏆 *Rank:* {rank}
 🔗 Referral Link:
 {link}",
