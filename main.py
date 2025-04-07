@@ -58,7 +58,6 @@ async def start(client, message):
         if ref != user_id:
             user_referrals.setdefault(ref, set()).add(user_id)
     await show_main_menu(client, message, "en")
-    )
 
 # Language selector removed
 
