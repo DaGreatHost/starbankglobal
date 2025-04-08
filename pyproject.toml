@@ -1,0 +1,9 @@
+[tool.poetry]
+name = "telegram-stars-bot"
+version = "1.0.0"
+description = ""
+authors = ["Boss Dev"]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
