@@ -112,6 +112,7 @@ async def cmd_start(message: types.Message):
         InlineKeyboardButton("🔗 Referral Link", callback_data="referral"),
         InlineKeyboardButton("📈 Leaderboard", callback_data="leaderboard"),
         InlineKeyboardButton("💸 Purchase History", callback_data="history"),
+        InlineKeyboardButton("🛒 Buy Stars", callback_data="buy"),
         InlineKeyboardButton("💬 Live Support", url="https://t.me/SBG_SupportBot")
     )
     # Send welcome message with the menu
