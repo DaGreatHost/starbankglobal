@@ -201,7 +201,7 @@ async def menu_button_handler(callback_query: types.CallbackQuery):
         row = c.fetchone()
         invites = row[0] if row else 0
         # Get bot username for link
-        bot_username = (await await bot.get_me()).username
+        bot_username = (await bot.get_me()).username
         ref_link = f"https://t.me/{(await bot.get_me()).username}?start={user_id}"
         ref_text = (f"🔗 **Your Referral Link:** {ref_link}\n"
                     f"Invite friends and earn rewards!\n"
