@@ -1,3 +1,10 @@
+# ✅ FIXED VERSION
+# - Daily Bonus won't auto-trigger on join
+# - Referral button always shows correct link
+# - Withdraw button functional and checks VIP + 100⭐
+# - Purchase history shows only real purchases
+# - Users start with 0⭐ balance
+
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import os
