@@ -1,10 +1,3 @@
-# ✅ FIXED VERSION
-# - Daily Bonus won't auto-trigger on join
-# - Referral button always shows correct link
-# - Withdraw button functional and checks VIP + 100⭐
-# - Purchase history shows only real purchases
-# - Users start with 0⭐ balance
-
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import os
@@ -208,8 +201,8 @@ async def menu_button_handler(callback_query: types.CallbackQuery):
         row = c.fetchone()
         invites = row[0] if row else 0
         # Get bot username for link
-        bot_username = (await bot.get_me()).username
-        ref_link = f"https://t.me/{bot_username}?start={user_id}"
+        bot_username = (await await bot.get_me()).username
+        ref_link = f"https://t.me/{(await bot.get_me()).username}?start={user_id}"
         ref_text = (f"🔗 **Your Referral Link:** {ref_link}\n"
                     f"Invite friends and earn rewards!\n"
                     f"📋 You have invited **{invites}** friends so far.")
@@ -270,42 +263,7 @@ async def menu_button_handler(callback_query: types.CallbackQuery):
                 rank += 1
         await bot.send_message(user_id, leaderboard_text, parse_mode="Markdown")
     elif action == "history":
-        # Simulate a new purchase and show purchase history
-        # Choose a random star package for dummy purchase
-        package = random.choice(STAR_PACKAGES)
-        label = package["label"]  # e.g. "⭐ 100 - $1.50"
-        # Parse the star amount from label (remove the star emoji and extract number)
-        try:
-            # Label format is "⭐ X - $Y"
-            parts = label.split()
-            dash_index = parts.index('-')
-            # Join parts that make up the number (in case of comma in number)
-            amount_str = "".join(parts[1:dash_index]).replace(",", "")
-            stars_bought = int(amount_str)
-        except Exception as e:
-            stars_bought = 0
-        # Insert purchase record in DB
-        timestamp = int(time.time())
-        c.execute("INSERT INTO purchases (user_id, description, timestamp) VALUES (?, ?, ?)",
-                  (user_id, label, timestamp))
-        # Update user's credits balance
-        if stars_bought > 0:
-            # Fetch current credits and VIP status
-            c.execute("SELECT credits, is_vip FROM users WHERE user_id=?", (user_id,))
-            row = c.fetchone()
-            if row:
-                current_credits, current_vip = row
-            else:
-                current_credits, current_vip = 0, 0
-                c.execute("INSERT OR IGNORE INTO users (user_id, credits) VALUES (?, ?)", 
-                          (user_id, 0))
-            new_credits = current_credits + stars_bought
-            new_vip = current_vip
-            if current_vip == 0 and new_credits >= 50:
-                new_vip = 1
-            c.execute("UPDATE users SET credits=?, is_vip=? WHERE user_id=?", 
-                      (new_credits, new_vip, user_id))
-        conn.commit()
+        # Purchase history: retrieve only from DB
         # Retrieve last 10 purchases from DB for this user
         c.execute("SELECT timestamp, description FROM purchases WHERE user_id=? ORDER BY id DESC LIMIT 10", 
                   (user_id,))
